@@ -1,0 +1,25 @@
+{
+  "name": "algoritmo",
+  "version": "1.0.0",
+  "description": "Algoritmo de teste criado para matéria do segundo bimestre.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/souzauser/algoritmo.git"
+  },
+  "keywords": [],
+  "author": "Helivelton",
+  "type": "module",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/souzauser/algoritmo/issues"
+  },
+  "homepage": "https://github.com/souzauser/algoritmo#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "sqlite3": "^6.0.1"
+  }
+}
