@@ -25,8 +25,8 @@ async function createProdutoController(request, response) {
     // Tratando o erro de nome repetido (UNIQUE) com o status correto
     if (error.message.includes("UNIQUE")) {
       return response.status(409).send({ 
-        erro: "Produto já cadastrado", 
-        mensagem: "Já existe um produto com este nome no banco de dados." 
+        erro: "Produto já está cadastrado.", 
+        mensagem: "Existe um produto com este nome no banco de dados." 
       });
     }
 
