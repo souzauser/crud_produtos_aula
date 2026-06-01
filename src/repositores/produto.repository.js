@@ -28,21 +28,70 @@ function createProdutoRepository(novoProduto) {
 
     db.run(
       `INSERT INTO produto(nome, valor, tipo) VALUES (?,?,?)`, // 1º argumento
-      [nome, valor, tipo],                                      // 2º argumento
-      
-      function (error) { // <--- AQUI ELA COMEÇA {
+      [nome, valor, tipo], // 2º argumento
+
+      function (error) {
+        // <--- AQUI ELA COMEÇA {
         if (error) {
           reject(error);
         } else {
           resolve({ id: this.lastID });
         }
-      } // <--- AQUI ELA TERMINA }
-      
+      }, // <--- AQUI ELA TERMINA }
     );
   });
+}
+
+function findProdutoByIdRepository(id) {
+  return new Promise((resolve, reject) => {
+    db.get(
+      `SELECT
+      *
+      FROM produto
+      WHERE id = ?`,
+      [id],
+      (error, row) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(row);
+        }
+      },
+    );
+  });
+}
+
+function updateProdutoRepository(id, produto) {
+  return new Promise((resolve, reject) => {
+    const {
+        nome,
+        valor,
+        tipo
+    } = produto;
+      db.run(
+        `UPDATE produto
+        SET 
+          nome = ?
+          valor = ?
+          tipo = ?
+          WHERE id = ?`,
+          [nome, valor, tipo, id],
+          (error) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve({id,...produto});
+            }
+          }
+          
+          
+      )
+  })
 }
 
 export default {
   findAllProdutoRepository,
   createProdutoRepository,
+  findProdutoByIdRepository,
+  updateProdutoRepository,
 };

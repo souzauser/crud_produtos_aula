@@ -4,7 +4,7 @@ import produtoService from "../services/produto.service.js";
 async function findAllProdutoController(request, response) {
   try {
     // ADICIONADO: 'await' para esperar o banco de dados responder
-    const produtos = await produtoService.findAllProdutoService(); 
+    const produtos = await produtoService.findAllProdutoService();
     response.status(200).send({ produtos });
   } catch (error) {
     // Se der erro ao buscar, geralmente é um erro interno do servidor (500)
@@ -24,9 +24,9 @@ async function createProdutoController(request, response) {
 
     // Tratando o erro de nome repetido (UNIQUE) com o status correto
     if (error.message.includes("UNIQUE")) {
-      return response.status(409).send({ 
-        erro: "Produto já está cadastrado.", 
-        mensagem: "Existe um produto com este nome no banco de dados." 
+      return response.status(409).send({
+        erro: "Produto já está cadastrado.",
+        mensagem: "Existe um produto com este nome no banco de dados.",
       });
     }
 
@@ -35,7 +35,19 @@ async function createProdutoController(request, response) {
   }
 }
 
+async function findProdutoByIdController(request, response) {
+  const { id } = request.params;
+
+  try {
+    const produto = await produtoService.findProdutoByIdService(id);
+    response.status(200).send({produto});
+  } catch (error) {
+    response.status(404).send(error.message);
+  }
+}
+
 export default {
   findAllProdutoController,
   createProdutoController,
+  findProdutoByIdController,
 };

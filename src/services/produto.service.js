@@ -6,7 +6,7 @@ async function findAllProdutoService() {
 }
 
 async function createProdutService(novoProduto) {
-  const produto = produtoRepository.createProdutoRepository(novoProduto);
+  const produto = await produtoRepository.createProdutoRepository(novoProduto);
 
   if (!produto) {
     throw new Error("Erro ao criar novo produto!");
@@ -15,7 +15,36 @@ async function createProdutService(novoProduto) {
   }
 }
 
+async function findProdutoByIdService(id) {
+  const produto = await produtoRepository.findProdutoByIdRepository(id);
+
+  if (!produto) {
+    throw new Error("Produto não encontrado");
+  }
+
+  return produto;
+}
+
+async function updateProdutoService(id, produtoAtualizado) {
+  const produto = await produtoRepository.findProdutoByIdRepository(id);
+  if (!produto) {
+    throw new Error("Produto não encontrado");
+  }
+  const produtoRetorno = await produtoRepository.updateProdutoRepository(
+    id,
+    produtoAtualizado,
+  );
+
+  if (!produtoRetorno) {
+    throw new Error("Erro ao atualizar produto");
+  }
+
+  return produtoRetorno;
+}
+
 export default {
   findAllProdutoService,
   createProdutService,
+  findProdutoByIdService,
+  updateProdutoService,
 };
