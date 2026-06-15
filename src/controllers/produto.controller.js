@@ -40,9 +40,36 @@ async function findProdutoByIdController(request, response) {
 
   try {
     const produto = await produtoService.findProdutoByIdService(id);
-    response.status(200).send({produto});
+    response.status(200).send({ produto });
   } catch (error) {
     response.status(404).send(error.message);
+  }
+}
+
+async function updateProdutoController(request, response) {
+  const { id } = request.params;
+  const produtoAtualizado = request.body;
+
+  try {
+    const produto = await produtoService.updateProdutoService(
+      id,
+      produtoAtualizado,
+    );
+
+    response.status(200).send({ produto });
+  } catch (error) {
+    response.status(400).send(error.message);
+  }
+}
+
+async function deleteProdutoController(request, response) {
+  const { id } = request.params;
+
+  try {
+    const retorno = await produtoService.deleteprodutoService(id);
+    response.status(200).send(retorno);
+  } catch (error) {
+    response.status(400).send(error.message);
   }
 }
 
@@ -50,4 +77,6 @@ export default {
   findAllProdutoController,
   createProdutoController,
   findProdutoByIdController,
+  updateProdutoController,
+  deleteProdutoController,
 };
